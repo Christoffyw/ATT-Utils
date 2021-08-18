@@ -5,3 +5,10 @@ E:\Township Tale\A Township Tale\BepInEx\plugins\ATT Utils\ATT Utils.pdb
 E:\Township Tale\Modding\ATT Utils\obj\Debug\ATT Utils.csproj.CopyComplete
 E:\Township Tale\Modding\ATT Utils\obj\Debug\ATT Utils.dll
 E:\Township Tale\Modding\ATT Utils\obj\Debug\ATT Utils.pdb
+E:\Township Tale\Modding\A Township Tale\BepInEx\plugins\ATT Utils\ATT Utils.dll
+E:\Township Tale\Modding\A Township Tale\BepInEx\plugins\ATT Utils\ATT Utils.pdb
+E:\Township Tale\Modding\ATT Utils\ATT-Utils\obj\Debug\ATT Utils.csprojAssemblyReference.cache
+E:\Township Tale\Modding\ATT Utils\ATT-Utils\obj\Debug\ATT Utils.csproj.CoreCompileInputs.cache
+E:\Township Tale\Modding\ATT Utils\ATT-Utils\obj\Debug\ATT Utils.csproj.CopyComplete
+E:\Township Tale\Modding\ATT Utils\ATT-Utils\obj\Debug\ATT Utils.dll
+E:\Township Tale\Modding\ATT Utils\ATT-Utils\obj\Debug\ATT Utils.pdb

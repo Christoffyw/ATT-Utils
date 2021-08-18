@@ -20,29 +20,29 @@ namespace ATT_Utils
             var harmony = new Harmony("com.christoffyw.plugins.attutils");
 
             //Apply Patches
-            harmony.PatchAll(typeof(SpawnLocalPatch));
+            harmony.PatchAll(typeof(Events.SpawnLocalPatch));
 
 
             Logger.LogInfo("ATT Utils Loaded!");
 
         }
 
-        [HarmonyPatch(typeof(SpawnManager), "SpawnLocal")]
-        class SpawnLocalPatch
-        {
-            static void Postfix(NetworkEntity __result)
-            {
-                Events.SpawnLocal();
-            }
-        }
-
         static public class Events
         {
             static public event Action playerSpawnEvent; //This event is called when the player prefab is spawned into the game
 
-            static public void SpawnLocal()
+            static public void InvokeEvent(Action action)
             {
-                playerSpawnEvent?.Invoke();
+                action?.Invoke();
+            }
+
+            [HarmonyPatch(typeof(SpawnManager), "SpawnLocal")]
+            public class SpawnLocalPatch
+            {
+                static public void Postfix(NetworkEntity __result)
+                {
+                    InvokeEvent(playerSpawnEvent);
+                }
             }
         }
 
