@@ -38,7 +38,7 @@ namespace ATT_Utils
 
         static public class Events
         {
-            static public event Action playerSpawnEvent;
+            static public event Action playerSpawnEvent; //This event is called when the player prefab is spawned into the game
 
             static public void SpawnLocal()
             {
@@ -50,10 +50,12 @@ namespace ATT_Utils
         {
             static public GamePlayer GetLocalPlayer()
             {
+                //Find all players in scene
                 Player[] playerObjects = FindObjectsOfType<Player>();
 
                 Player collectedPlayer = null;
 
+                //Check if selected player is the local player
                 foreach(Player player in playerObjects)
                 {
                     if (player.IsLocalPlayer)
@@ -66,11 +68,15 @@ namespace ATT_Utils
                 }
                 if (collectedPlayer)
                 {
+                    //Create new type for easy use
                     var newPlayer = new GamePlayer();
 
+                    //Set common variables
                     newPlayer.player = collectedPlayer;
                     newPlayer.rightHand = collectedPlayer.PlayerController.RightController.Hand;
                     newPlayer.leftHand = collectedPlayer.PlayerController.LeftController.Hand;
+                    newPlayer.playerController = collectedPlayer.PlayerController;
+                    newPlayer.locomotionController = collectedPlayer.PlayerController.LocomotionController;
 
                     return newPlayer;
                 }
