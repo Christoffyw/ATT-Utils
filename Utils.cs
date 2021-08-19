@@ -7,6 +7,8 @@ using BepInEx;
 using UnityEngine;
 using HarmonyLib;
 using Alta.Networking;
+using Alta.Networking.Servers;
+using Alta.WebApi.Models;
 
 namespace ATT_Utils
 {
@@ -29,7 +31,12 @@ namespace ATT_Utils
 
         static public class Events
         {
-            static public event Action playerSpawnEvent; //This event is called when the player prefab is spawned into the game
+            //
+            //Event Actions
+            //
+            static public event Action playerSpawnEvent; //This is called when the player spawns into the game
+            static public event Action playerDieEvent; //This is called when a player dies
+            
 
             static public void InvokeEvent(Action action)
             {
@@ -43,11 +50,36 @@ namespace ATT_Utils
                 {
                     InvokeEvent(playerSpawnEvent);
                 }
+
+
+            [HarmonyPatch(typeof(Alta.StatSystem.StatBarVisibilityGroup), "PlayerDeath")]
+            public class PlayerDiePatch
+            {
+                static public void Postfix(HealthObject health)
+                {
+                    InvokeEvent(playerDieEvent);
+                }
             }
         }
 
         static public class Game
         {
+            //
+            // Classes
+            //
+            public class GamePlayer
+            {
+                public Player player;
+                public Alta.Character.Hand rightHand;
+                public Alta.Character.Hand leftHand;
+                public PlayerController playerController;
+                public LocomotionController locomotionController;
+                public UserInfoAndRole userInfo;
+            }
+
+            //
+            // Methods
+            //
             static public GamePlayer GetLocalPlayer()
             {
                 //Find all players in scene
@@ -77,20 +109,12 @@ namespace ATT_Utils
                     newPlayer.leftHand = collectedPlayer.PlayerController.LeftController.Hand;
                     newPlayer.playerController = collectedPlayer.PlayerController;
                     newPlayer.locomotionController = collectedPlayer.PlayerController.LocomotionController;
+                    newPlayer.userInfo = collectedPlayer.UserInfo;
 
                     return newPlayer;
                 }
                 else
                     return null;
-            }
-
-            public class GamePlayer
-            {
-                public Player player;
-                public Alta.Character.Hand rightHand;
-                public Alta.Character.Hand leftHand;
-                public PlayerController playerController;
-                public LocomotionController locomotionController;
             }
         }
     }
